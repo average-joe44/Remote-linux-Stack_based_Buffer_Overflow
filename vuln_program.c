@@ -30,9 +30,15 @@ int main(){
 	client_fd = accept(server_fd, NULL, NULL);
 	
 	printf("Connection received");
-	
-	read(client_fd, buffer, 512);
-	
+
+	for(int i = 0; i < 3; i++) {
+	memset(buffer, 0, sizeof(buffer));
+	int n = read(client_fd, buffer, 512);
+	if(n > 0){
+		buffer[n] = '\0';
+		dprintf(client_fd, buffer);
+		}
+	}	
 	close(client_fd);
 	close(server_fd);
 }
